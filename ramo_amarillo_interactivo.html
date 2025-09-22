@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramo Amarillo 🌻</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #fff9e6, #fff);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+  }
+  .container {
+    text-align: center;
+  }
+  button {
+    background-color: #ffdd33;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+  }
+  button:hover { transform: scale(1.05); }
+  .message { display: none; font-size: 1.4rem; margin-top: 1rem; color: #444; animation: fadeIn 2s forwards; }
+  .bundle { display: flex; flex-wrap: wrap; justify-content: center; margin-top: 2rem; opacity: 0; transform: scale(0.8); transition: all 0.8s ease; }
+  .flower { margin: 5px; width: 80px; height: 80px; opacity: 0; transform: scale(0.5); animation: bloom 0.8s forwards; }
+  .ribbon { width: 40px; height: 60px; margin: auto; border-radius: 20px; background: #f7c844; margin-top: -10px; transform: rotate(15deg); }
+  @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+  @keyframes bloom { to {opacity:1; transform: scale(1);} }
+  .petals { animation: fall 6s linear infinite; }
+  @keyframes fall { 0% {transform: translateY(0px);} 100% {transform: translateY(300px); opacity: 0;} }
+</style>
+</head>
+<body>
+<div class="container">
+  <button id="openRamo">💛 Toca para abrir tu ramo</button>
+  <div class="bundle" id="bundle"></div>
+  <div class="ribbon" id="ribbon" style="display:none"></div>
+  <div class="message" id="message">🌻 Estas flores son para ti, porque tu amistad ilumina como el sol 💛</div>
+</div>
+<script>
+const btn = document.getElementById('openRamo');
+const bundle = document.getElementById('bundle');
+const message = document.getElementById('message');
+const ribbon = document.getElementById('ribbon');
+
+const flowerSVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="10" fill="#5c3d00" />
+  <circle cx="50" cy="25" r="15" fill="#ffdd33" />
+  <circle cx="75" cy="50" r="15" fill="#ffdd33" />
+  <circle cx="50" cy="75" r="15" fill="#ffdd33" />
+  <circle cx="25" cy="50" r="15" fill="#ffdd33" />
+  <circle cx="35" cy="35" r="15" fill="#ffdd33" />
+  <circle cx="65" cy="35" r="15" fill="#ffdd33" />
+  <circle cx="65" cy="65" r="15" fill="#ffdd33" />
+  <circle cx="35" cy="65" r="15" fill="#ffdd33" />
+</svg>`;
+
+btn.addEventListener('click', () => {
+  btn.style.display = 'none';
+  ribbon.style.display = 'block';
+  bundle.style.opacity = 1;
+  bundle.style.transform = 'scale(1)';
+
+  for (let i=0; i<9; i++) {
+    const f = document.createElement('div');
+    f.className = 'flower';
+    f.innerHTML = flowerSVG;
+    f.style.animationDelay = `${i*0.3}s`;
+    bundle.appendChild(f);
+  }
+
+  message.style.display = 'block';
+
+  // pétalos cayendo
+  for(let j=0;j<15;j++){
+    const p = document.createElement('div');
+    p.className = 'petals';
+    p.style.position='absolute';
+    p.style.width='12px';
+    p.style.height='12px';
+    p.style.background='#ffdd33';
+    p.style.borderRadius='50%';
+    p.style.left=Math.random()*window.innerWidth+'px';
+    p.style.top='-20px';
+    p.style.opacity=Math.random();
+    p.style.animationDuration=(3+Math.random()*3)+'s';
+    document.body.appendChild(p);
+  }
+});
+</script>
+</body>
+</html>
